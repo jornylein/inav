@@ -2826,10 +2826,10 @@ static bool osdDrawSingleElement(uint8_t item)
             if (valid) {
                 verticalWindSpeed = getEstimatedWindSpeed(Z);
                 if (verticalWindSpeed < 0) {
-                    buff[1] = SYM_AH_DECORATION_DOWN;
+                    buff[1] = SYM_AH_DIRECTION_DOWN;
                     verticalWindSpeed = -verticalWindSpeed;
                 } else if (verticalWindSpeed > 0) {
-                    buff[1] = SYM_AH_DECORATION_UP;
+                    buff[1] = SYM_AH_DIRECTION_UP;
                 }
             } else {
                 verticalWindSpeed = 0;
