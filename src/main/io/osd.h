@@ -260,6 +260,7 @@ typedef enum {
     OSD_SWITCH_INDICATOR_3,
     OSD_TPA_TIME_CONSTANT,
     OSD_FW_LEVEL_TRIM,
+    OSD_PAN_SERVO_CENTRED,
     OSD_ITEM_COUNT // MUST BE LAST
 } osd_items_e;
 
