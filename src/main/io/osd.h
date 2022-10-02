@@ -94,6 +94,7 @@
 #define OSD_MSG_RTH_TRACKBACK       "RTH BACK TRACKING"
 #define OSD_MSG_HEADING_HOME        "EN ROUTE TO HOME"
 #define OSD_MSG_WP_FINISHED         "WP END>HOLDING POSITION"
+#define OSD_MSG_WP_LANDED           "WP END>LANDED"
 #define OSD_MSG_PREPARE_NEXT_WP     "PREPARING FOR NEXT WAYPOINT"
 #define OSD_MSG_ADJUSTING_WP_ALT    "ADJUSTING WP ALTITUDE"
 #define OSD_MSG_MISSION_PLANNER     "(WP MISSION PLANNER)"
@@ -106,6 +107,7 @@
 #define OSD_MSG_LANDED              "LANDED"
 #define OSD_MSG_PREPARING_LAND      "PREPARING TO LAND"
 #define OSD_MSG_AUTOLAUNCH          "AUTOLAUNCH"
+#define OSD_MSG_AUTOLAUNCH_MANUAL   "AUTOLAUNCH (MANUAL)"
 #define OSD_MSG_ALTITUDE_HOLD       "(ALTITUDE HOLD)"
 #define OSD_MSG_AUTOTRIM            "(AUTOTRIM)"
 #define OSD_MSG_AUTOTUNE            "(AUTOTUNE)"
@@ -260,7 +262,10 @@ typedef enum {
     OSD_SWITCH_INDICATOR_3,
     OSD_TPA_TIME_CONSTANT,
     OSD_FW_LEVEL_TRIM,
-    OSD_PAN_SERVO_CENTRED,
+    OSD_GLIDE_TIME_REMAINING,
+    OSD_GLIDE_RANGE,
+    OSD_CLIMB_EFFICIENCY,
+    OSD_NAV_WP_MULTI_MISSION_INDEX,
     OSD_ITEM_COUNT // MUST BE LAST
 } osd_items_e;
 
@@ -416,8 +421,6 @@ typedef struct osdConfig_s {
     bool    osd_home_position_arm_screen;
     uint8_t pan_servo_index;                    // Index of the pan servo used for home direction offset
     int8_t  pan_servo_pwm2centideg;             // Centidegrees of servo rotation per us pwm
-    uint8_t pan_servo_offcentre_warning;        // Degrees around the centre, that is assumed camera is wanted to be facing forwards, but isn't centred
-    bool    pan_servo_indicator_show_degrees;   // Show the degrees of offset for the pan servo
     uint8_t crsf_lq_format;
     uint8_t sidebar_height;                     // sidebar height in rows, 0 turns off sidebars leaving only level indicator arrows
     uint8_t telemetry; 				            // use telemetry on displayed pixel line 0
@@ -467,8 +470,6 @@ void osdFormatAltitudeSymbol(char *buff, int32_t alt);
 void osdFormatVelocityStr(char* buff, int32_t vel, bool _3D, bool _max);
 // Returns a heading angle in degrees normalized to [0, 360).
 int osdGetHeadingAngle(int angle);
-
-int16_t osdGetPanServoOffset(void);
 
 /**
  * @brief Get the OSD system message
