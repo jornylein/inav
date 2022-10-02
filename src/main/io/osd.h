@@ -266,6 +266,7 @@ typedef enum {
     OSD_GLIDE_RANGE,
     OSD_CLIMB_EFFICIENCY,
     OSD_NAV_WP_MULTI_MISSION_INDEX,
+    OSD_PAN_SERVO_CENTRED,
     OSD_ITEM_COUNT // MUST BE LAST
 } osd_items_e;
 
@@ -421,6 +422,8 @@ typedef struct osdConfig_s {
     bool    osd_home_position_arm_screen;
     uint8_t pan_servo_index;                    // Index of the pan servo used for home direction offset
     int8_t  pan_servo_pwm2centideg;             // Centidegrees of servo rotation per us pwm
+    uint8_t pan_servo_offcentre_warning;        // Show warning if pan servo is not deemed centred
+    bool    pan_servo_indicator_show_degrees;   // Show degrees of movement of the pan servo
     uint8_t crsf_lq_format;
     uint8_t sidebar_height;                     // sidebar height in rows, 0 turns off sidebars leaving only level indicator arrows
     uint8_t telemetry; 				            // use telemetry on displayed pixel line 0
@@ -470,6 +473,8 @@ void osdFormatAltitudeSymbol(char *buff, int32_t alt);
 void osdFormatVelocityStr(char* buff, int32_t vel, bool _3D, bool _max);
 // Returns a heading angle in degrees normalized to [0, 360).
 int osdGetHeadingAngle(int angle);
+
+int16_t osdGetPanServoOffset(void);
 
 /**
  * @brief Get the OSD system message
