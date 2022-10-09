@@ -1,2 +1,3 @@
 target_stm32f722xe(AOCODARCF7MINI_V1)
 target_stm32f722xe(AOCODARCF7MINI_V2)
+target_stm32f722xe(AOCODARCF7MINI_Joern)

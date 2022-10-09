@@ -20,10 +20,14 @@
 
 #define TARGET_BOARD_IDENTIFIER "AO7M"
 
+#if defined(AOCODARCF7MINI_Joern)
+#define USBD_PRODUCT_STRING  "AocodaRCF7MiniJoern"
+#else
 #if defined(AOCODARCF7MINI_V2)
 #define USBD_PRODUCT_STRING  "AocodaRCF7MiniV2"
 #else
 #define USBD_PRODUCT_STRING  "AocodaRCF7MiniV1"
+#endif
 #endif
 
 #define LED0                    PA13
