@@ -1393,22 +1393,22 @@ groups:
     type: imuConfig_t
     headers: ["flight/imu.h"]
     members:
-      - name: imu_dcm_kp
+      - name: ahrs_dcm_kp
         description: "Inertial Measurement Unit KP Gain for accelerometer measurements"
         default_value: 2000
         field: dcm_kp_acc
         max: UINT16_MAX
-      - name: imu_dcm_ki
+      - name: ahrs_dcm_ki
         description: "Inertial Measurement Unit KI Gain for accelerometer measurements"
         default_value: 50
         field: dcm_ki_acc
         max: UINT16_MAX
-      - name: imu_dcm_kp_mag
+      - name: ahrs_dcm_kp_mag
         description: "Inertial Measurement Unit KP Gain for compass measurements"
         default_value: 2000
         field: dcm_kp_mag
         max: UINT16_MAX
-      - name: imu_dcm_ki_mag
+      - name: ahrs_dcm_ki_mag
         description: "Inertial Measurement Unit KI Gain for compass measurements"
         default_value: 50
         field: dcm_ki_mag
@@ -1418,24 +1418,24 @@ groups:
         default_value: 25
         min: 0
         max: 180
-      - name: imu_acc_ignore_rate
+      - name: ahrs_acc_ignore_rate
         description: "Total gyro rotation rate threshold [deg/s] before scaling to consider accelerometer trustworthy"
         default_value: 15
         field: acc_ignore_rate
         min: 0
         max: 30
-      - name: imu_acc_ignore_slope
+      - name: ahrs_acc_ignore_slope
         description: "Half-width of the interval to gradually reduce accelerometer weight. Centered at `imu_acc_ignore_rate` (exactly 50% weight)"
         default_value: 5
         field: acc_ignore_slope
         min: 0
         max: 10
-      - name: imu_gps_yaw_windcomp
+      - name: ahrs_gps_yaw_windcomp
         description: "Wind compensation in heading estimation from gps groundcourse(fixed wing only)"
         default_value: ON
         field: gps_yaw_windcomp
         type: bool
-      - name: imu_inertia_comp_method
+      - name: ahrs_inertia_comp_method
         description: "Inertia force compensation method when gps is avaliable, VELNED use the accleration from gps, TURNRATE calculates accleration by turnrate multiplied by speed, ADAPTIVE choose best result from two in each ahrs loop"
         default_value: VELNED
         field: inertia_comp_method
@@ -3443,10 +3443,10 @@ groups:
         description: Should home position coordinates be displayed on the arming screen.
 
       - name: osd_pan_servo_index
-        description: Index of the pan servo to adjust osd home heading direction based on camera pan. Note that this feature does not work with continiously rotating servos.
+        description: Index of the pan servo, used to adjust osd home heading direction based on camera pan. Note that this feature does not work with continiously rotating servos.
         field: pan_servo_index
         min: 0
-        max: 10
+        max: 16
         default_value: 0
 
       - name: osd_pan_servo_pwm2centideg
@@ -3455,6 +3455,19 @@ groups:
         default_value: 0
         min: -36
         max: 36
+
+      - name: osd_pan_servo_offcentre_warning
+        description: Degrees either side of the pan servo centre; where it is assumed camera is wanted to be facing forwards, but isn't at 0. If in this range and not 0 for longer than 10 seconds, the pan servo offset OSD element will blink. 0 means the warning is disabled.
+        field: pan_servo_offcentre_warning
+        min: 0
+        max: 45
+        default_value: 10
+
+      - name: osd_pan_servo_indicator_show_degrees
+        description: Show the degress of offset from centre on the pan servo OSD display element.
+        field: pan_servo_indicator_show_degrees
+        type: bool
+        default_value: OFF
 
       - name: osd_esc_rpm_precision
         description: Number of characters used to display the RPM value.
@@ -3576,11 +3589,13 @@ groups:
       - name: name
         description: "Craft name"
         default_value: ""
+        type: string
         field: craftName
         max: MAX_NAME_LENGTH
       - name: pilot_name
         description: "Pilot name"
         default_value: ""
+        type: string
         field: pilotName
         max: MAX_NAME_LENGTH
 
