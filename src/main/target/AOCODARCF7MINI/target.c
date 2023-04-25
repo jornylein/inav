@@ -29,6 +29,19 @@
 BUSDEV_REGISTER_SPI_TAG(busdev_mpu6500,     DEVHW_MPU6500,      MPU6500_SPI_BUS,    MPU6500_CS_PIN,     MPU6500_EXTI_PIN,       0,  DEVFLAGS_NONE,  IMU_MPU6500_ALIGN);
 
 timerHardware_t timerHardware[] = {
+#if defined(AOCODARCF7MINI_Joern)
+    DEF_TIM(TIM3, CH1, PB4, TIM_USE_MC_MOTOR | TIM_USE_FW_SERVO, 0, 0),                     // S1
+    DEF_TIM(TIM3, CH2, PB5, TIM_USE_MC_MOTOR | TIM_USE_FW_SERVO, 0, 0),                     // S2
+    DEF_TIM(TIM3, CH3, PB0, TIM_USE_MC_MOTOR | TIM_USE_FW_SERVO, 0, 0),                     // S3
+    DEF_TIM(TIM3, CH4, PB1, TIM_USE_MC_MOTOR | TIM_USE_FW_SERVO, 0, 0),                     // S4
+    DEF_TIM(TIM2, CH2, PB3, TIM_USE_MC_MOTOR | TIM_USE_FW_SERVO, 0, 0),                     // S6
+    DEF_TIM(TIM2, CH1, PA15, TIM_USE_MC_MOTOR | TIM_USE_FW_SERVO, 0, 0),                    // S7
+    DEF_TIM(TIM4, CH2, PB7, TIM_USE_MC_MOTOR | TIM_USE_FW_SERVO, 0, 0),                     // S8
+    
+    DEF_TIM(TIM4, CH1, PB6, TIM_USE_ANY | TIM_USE_FW_SERVO, 0, 0),                          // S5 / camera with 200ohm series resistor
+
+    DEF_TIM(TIM1, CH1, PA8, TIM_USE_FW_MOTOR | TIM_USE_LED | TIM_USE_MC_SERVO, 0, 0),       // LED STRIP
+#else
     DEF_TIM(TIM1, CH3, PA10,  TIM_USE_PPM, 0, 0),                            // PPM, RX1  
     
     DEF_TIM(TIM3, CH1, PB4,   TIM_USE_MC_MOTOR | TIM_USE_FW_MOTOR, 0, 0),     // S1   D(1, 4, 5)
@@ -47,7 +60,7 @@ timerHardware_t timerHardware[] = {
     DEF_TIM(TIM4, CH2, PB7,   TIM_USE_MC_MOTOR | TIM_USE_FW_SERVO, 0, 0),    // S8   D(1, 3, 2)
 
     DEF_TIM(TIM1, CH1, PA8,  TIM_USE_LED, 0, 0),                             // LED     
-    
+#endif    
 };
 
 
